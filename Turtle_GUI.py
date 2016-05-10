@@ -53,10 +53,10 @@ def 得到範例程式():
     #print(cwd, os.listdir(cwd))
     檔案位置="Demo\\"
     if os.path.isdir(檔案位置) == False:
-        print("範例檔案夾Demo不存在")
+        print("Demo folder doesn't exist!")
+        return None
 
     檔案表 = [檔案 for 檔案 in os.listdir(檔案位置) if
-                     檔案.startswith("tdemo_") and
                      not 檔案.endswith(".pyc")]
     程式表 = []
     for 檔案名 in 檔案表:
@@ -67,9 +67,9 @@ def 得到範例程式():
             sys.path.append(path)
             資料夾名 = [檔案名]
             程式們 = [程式 for 程式 in os.listdir(path) if
-                            程式.startswith("tdemo_") and
                             程式.endswith(".py")]
-            程式表.append(資料夾名+程式們)
+            if 程式們 !=[]:
+                程式表.append(資料夾名+程式們)
     return 程式表
 
 
@@ -77,33 +77,33 @@ class GUIDemo():
     """
     畫出GUI介面，傳入Tk()類
     """
-    def __init__(self, master=None):
+    def __init__(self):
         """
         建立選單列，文字及畫圖區
         還有建立按鈕
         """
-        #Frame.__init__(self, master)
-        self.root=root= master
-        self.建立文字區()
+        self.root=root= Tk()
+        root.title('龜作圖程式翻譯')
+        self.建立文字及繪圖區()
         self.建立選單列()
+        self.建立標籤及按鈕()
         self.module={}
         self.程式名= ""
-        self.外部翻譯=False
-        # g_frame = Frame(root)
-        self.按鈕框 = 按鈕框 = Frame(root, height=100)
+
+
+    def 建立標籤及按鈕(self):
+        self.按鈕框 = 按鈕框 = Frame(self.root, height=100)
         self.輸出行號= Label(按鈕框,  text="L: 1 C: 1", font=Linefont, bg='lightgrey', borderwidth=2, relief=SUNKEN)
         self.輸出行號.pack(side=LEFT, expand=0, fill=BOTH)
         self.輸出結果= Label(按鈕框,  text="---", font=btnfont, bg="#FFFFBF", borderwidth=3, relief=RIDGE)
         self.輸出結果.pack(side=LEFT, expand=1, fill=BOTH)
-        self.開始鍵=  Button(按鈕框, text=" 開始 ", command= self.執行,fg="black", disabledforeground= "#fed", font= btnfont)
-        self.開始鍵.pack(side=LEFT, expand=1, fill=X)
+        self.執行鍵=  Button(按鈕框, text=" 執行 ", command= self.執行,fg="black", disabledforeground= "#fed", font= btnfont)
+        self.執行鍵.pack(side=LEFT, expand=1, fill=X)
         self.停止鍵=  Button(按鈕框, text=" 停止 ", command= self.停止執行,fg="black", disabledforeground= "#fed", font= btnfont)
         self.停止鍵.pack(side=LEFT, expand=1, fill=X)
         self.按鈕框.pack(side=TOP, expand=0, fill=BOTH)
-        # g_frame.pack(side=TOP, expand=0, fill=BOTH)
         
-        self.按鈕設置(NORMAL,DISABLED)
-
+        self.按鈕設置(NORMAL,DISABLED)    
 
     def 建立選單列(self):
         """
@@ -168,50 +168,53 @@ class GUIDemo():
         self.功能選單 = 功能選單 =Menu(選單列,tearoff=0, font= menufontC)
         功能選單.add_command(label="英翻中(en->ch)", command=self.英中翻譯,accelerator = 'alt+t')
         功能選單.add_command(label="中翻英(ch->en)", command=self.中英翻譯)
-        功能選單.add_separator()
-        功能選單.add_checkbutton(label="增加外部翻譯",variable=self.bv)
-        功能選單.add_separator()
+
         功能選單.add_command(label="執行", command= self.執行,accelerator = 'ctrl+e')
         功能選單.add_command(label="停止", command= self.停止執行,accelerator = 'ctrl+r')
         功能選單.add_separator()
-        功能選單.add_command(label="匯出中文範例", command= self.匯出範例)
+        功能選單.add_checkbutton(label="增加註解翻譯",variable=self.bv)
         選單列.add_cascade(label="功能", menu=功能選單)
         self.root.bind_all('<Alt-t>', self.英中翻譯)
         self.root.bind_all('<Control-Key-e>', self.執行)
         self.root.bind_all('<Control-Key-r>', self.停止執行)
         self.root.bind_all('<KeyPress-F1>',self.焦點轉移)
-        範例選單 = Menu(選單列,tearoff= 1, font= menufont)
-        選單列.add_cascade(label="範例", menu=範例選單)
-        aa=0;
-        for i in 得到範例程式():
-            def loadexample(x):
-                def emit():
-                    self.載入範例(x)
-                return emit
-            if isinstance(i,str):
-                程式名= i.replace("tdemo_","",1)
-                範例選單.add_command(label=程式名[:-3], command= loadexample(i))
-            else:
-                程式夾, 程式檔 = i[0], i[1:]
-                程式夾2= 程式夾.replace("tdemo_","",1)
-                範例選單一 = Menu(範例選單,tearoff=1, font=menufont)
-                範例選單.add_cascade(label=程式夾2, menu=範例選單一)
-                for 程式名 in 程式檔:
-                    aa+=1
-                    程式路徑=os.path.join(程式夾,程式名)
-                    程式名= 程式名.replace("tdemo_","",1)
-                    範例選單一.add_command(label=程式名[:-3], command= loadexample(程式路徑))
-        print(aa)
+        範例程式們=得到範例程式()
+        if 範例程式們!=None:        
+            範例選單 = Menu(選單列,tearoff= 1, font= menufont)
+            選單列.add_cascade(label="範例", menu=範例選單)
+            範例選單.add_command(label="匯出全部中文範例", command= self.匯出範例, font= menufontC)
+            範例選單.add_separator()
+            aa=0;
+
+            for i in 範例程式們:
+                def loadexample(x):
+                    def emit():
+                        self.載入範例(x)
+                    return emit
+                if isinstance(i,str):
+                    程式名= i.replace("tdemo_","",1)
+                    範例選單.add_command(label=程式名[:-3], command= loadexample(i))
+                else:
+                    程式夾, 程式檔 = i[0], i[1:]
+                    程式夾2= 程式夾.replace("tdemo_","",1)
+                    範例選單一 = Menu(範例選單,tearoff=1, font=menufont)
+                    範例選單.add_cascade(label=程式夾2, menu=範例選單一)
+                    for 程式名 in 程式檔:
+                        aa+=1
+                        程式路徑=os.path.join(程式夾,程式名)
+                        程式名= 程式名.replace("tdemo_","",1)
+                        範例選單一.add_command(label=程式名[:-3], command= loadexample(程式路徑))
+            print(aa)
         self.root.config(menu=選單列)
 
-    def 建立文字區(self):
+    def 建立文字及繪圖區(self):
         """
         建立兩個Text區跟龜模組畫圖區並建立快捷鍵        
         """
         setup={}
         pane= PanedWindow(orient=HORIZONTAL, bg='black')
         text_frame= Frame(pane)
-        self.text=text= Text(text_frame, name='text', padx=5,wrap='none', width=45,  bg='white', font= tuple(txtfont),tabs=('4c'),undo=True)
+        self.text=text= Text(text_frame, name='text', padx=5,wrap='none', width=45,  bg='white', tabs="1"*4,font= tuple(txtfont),undo=True)
         text.name="text"
         vbar= Scrollbar(text_frame, name='vbar')
         
@@ -220,14 +223,15 @@ class GUIDemo():
         hbar = Scrollbar(text_frame, name='hbar', orient=HORIZONTAL)
         hbar['command'] = text.xview
         hbar.pack(side=BOTTOM, fill=X)
-        
+        text['yscrollcommand'] = vbar.set
+        text['xscrollcommand'] = hbar.set
         text.pack(side=LEFT, fill=BOTH, expand=1)
  
         pane.add(text_frame)  
         
         
         text_frame2= Frame(pane)
-        self.text2=text2= Text(text_frame2, name='text', padx=5,wrap='none', width=45, bg='white',font= tuple(txtfont),undo=True)
+        self.text2=text2= Text(text_frame2, name='text', padx=5,wrap='none', width=45, bg='white',tabs="1",font= tuple(txtfont),undo=True)
         text.name="text2"
         vbar= Scrollbar(text_frame2, name='vbar')
         vbar['command'] = text2.yview
@@ -235,6 +239,8 @@ class GUIDemo():
         hbar = Scrollbar(text_frame2, name='hbar', orient=HORIZONTAL)
         hbar['command'] = text2.xview
         hbar.pack(side=BOTTOM, fill=X)
+        text2['yscrollcommand'] = vbar.set
+        text2['xscrollcommand'] = hbar.set
         text2.pack(side=LEFT, fill=BOTH, expand=1)
         pane.add(text_frame2) 
         
@@ -257,7 +263,8 @@ class GUIDemo():
         
         Percolator(text).insertfilter(ColorDelegator())
         Percolator(text2).insertfilter(ColorDelegator())
-        
+        # text.bind("<Tab>", self.tab)
+        # text2.bind("<Tab>", self.tab)
         text.bind('<Control-MouseWheel>', self.滑鼠滾輪)
         text.bind('<Control-Button-4>', self.字體放大)
         text.bind('<Control-Button-5>', self.字體縮小)
@@ -270,7 +277,19 @@ class GUIDemo():
         text.bind("<ButtonRelease>", self.行號更新)
         text2.bind("<KeyRelease>", self.行號更新)
         text2.bind("<ButtonRelease>", self.行號更新)
+    # def tab(self, event):
+        # focused_on = self.root.focus_get()
+        # print(focused_on.index('current'))
 
+        # focused_on.insert('insert', " " * 4)
+        # 鼠標位置= focused_on.index('insert')
+        # 鼠標l,鼠標c= 鼠標位置.split(".")
+        # print(鼠標l,鼠標c)
+        # 鼠標c=int(鼠標c)-1
+        # 鼠標位置=鼠標l+"."+str(鼠標c)
+        # print(鼠標位置)
+        # focused_on.delete(鼠標位置, 'insert')         
+    
     def 行號更新(self, event):
         """
         當按下鍵盤及滑鼠並放開時，連結的函數
@@ -291,40 +310,47 @@ class GUIDemo():
         self._canvas.yview_moveto(0.5*(self.canvheight-cheight)/self.canvheight)
 
     def 匯出範例(self,event=None):
-        存放目錄= "tc_Demo\\"
-        if not os.path.exists(存放目錄):
-            os.mkdir(存放目錄)
-        檔案位置="Demo\\"
-        for i in 得到範例程式():
-            if isinstance(i,str):
-                新程式名= i.replace("tdemo_","",1)
-                新程式名="tc_"+新程式名
-                程式路徑=os.path.join(存放目錄,i)
-                TurtleTranslate.翻譯檔案(存放目錄,程式路徑,False,新程式名)
-            else:
-                程式夾, 程式檔 = i[0], i[1:]
-                程式夾2= 程式夾.replace("tdemo_","",1)
-                存放程式夾= os.path.join(存放目錄,程式夾2)
-                if not os.path.exists(存放程式夾):
-                    os.mkdir(存放程式夾)
-                for 程式名 in 程式檔:
-                    程式路徑=os.path.join(程式夾,程式名)
-                    程式路徑=os.path.join(檔案位置,程式路徑)
-                    新程式名= 程式名.replace("tdemo_","",1)
+        存放路徑 = askdirectory(title= "存放目錄")
+        總數量=[0,0,0,0,0]
+        if 存放路徑 != "":
+            存放目錄= 存放路徑+"\\tc_Demo\\"
+            if not os.path.exists(存放目錄):
+                os.mkdir(存放目錄)
+            檔案位置="Demo\\"
+            for i in 得到範例程式():
+                if isinstance(i,str):
+                    新程式名= i.replace("tdemo_","",1)
                     新程式名="tc_"+新程式名
-                    TurtleTranslate.翻譯檔案(存放程式夾,程式路徑,False,新程式名)
-
-        shutil.copyfile("Demo//tdemo_games//help.gif","tc_Demo\\games\\help.gif")
-        shutil.copyfile("Demo//tdemo_games//next.gif","tc_Demo\\games\\next.gif")
-        shutil.copyfile("Demo//tdemo_games//tangramdata.py","tc_Demo\\games\\tangramdata.py")
-        TurtleTranslate.翻譯檔案("tc_Demo\\games\\","Demo//tdemo_games//button.py",False,"button.py")
-        被複製目錄= "Demo//tdemo_games//"
-        filesName= ["huhn01.gif","huhn02.gif","landschaft800x600.gif",
-                    "daneben.wav","applaus.wav","gameover.wav","getroffen.wav"]
-        for i in filesName:
-            shutil.copyfile(被複製目錄+i,"tc_Demo\\games\\"+i)
-        self.輸出結果.config(text="匯出中文範例文件夾",fg= "black")
-    
+                    程式路徑=os.path.join(存放目錄,i)
+                    TurtleTranslate.翻譯檔案(存放目錄,程式路徑,False,新程式名)
+                else:
+                    程式夾, 程式檔 = i[0], i[1:]
+                    程式夾2= 程式夾.replace("tdemo_","",1)
+                    存放程式夾= os.path.join(存放目錄,程式夾2)
+                    if not os.path.exists(存放程式夾):
+                        os.mkdir(存放程式夾)
+                    for 程式名 in 程式檔:
+                        程式路徑=os.path.join(程式夾,程式名)
+                        程式路徑=os.path.join(檔案位置,程式路徑)
+                        新程式名= 程式名.replace("tdemo_","",1)
+                        新程式名="tc_"+新程式名
+                        程式碼,中文化程式碼,標記表,數量=TurtleTranslate.翻譯檔案(存放程式夾,程式路徑,False,新程式名)
+                        for i in range(5):
+                            總數量[i]+=數量[i]
+                        if 程式名== "tdemo_tangram.py":
+                            程式夾路徑=os.path.join(檔案位置,程式夾)
+                            shutil.copyfile(程式夾路徑+"//help.gif",存放程式夾+"\\help.gif")
+                            shutil.copyfile(程式夾路徑+"//next.gif",存放程式夾+"\\next.gif")
+                            shutil.copyfile(程式夾路徑+"//tangramdata.py",存放程式夾+"\\tangramdata.py")
+                            TurtleTranslate.翻譯檔案(存放程式夾,程式夾路徑+"//button.py",False,"button.py")
+                        elif self.程式名== "tdemo_moorhuhn.py":
+                            程式夾路徑=os.path.join(檔案位置,程式夾)
+                            filesName= ["huhn01.gif","huhn02.gif","landschaft800x600.gif",
+                                        "daneben.wav","applaus.wav","gameover.wav","getroffen.wav"]
+                            for i in filesName:
+                                shutil.copyfile(程式夾路徑+i,程式夾路徑+"\\"+i)
+            self.輸出結果.config(text="匯出中文範例文件夾",fg= "black")
+            print(總數量)
     def 焦點轉移(self,event=None):
         """
         將焦點移到龜模組畫布上
@@ -338,29 +364,32 @@ class GUIDemo():
         開啟檔案將檔案文字顯示在文字區1
         """
         self.停止執行()
-        檔案路徑 = askopenfilename()
-        f= open(檔案路徑,"r",encoding='UTF-8')
-        檔案內容= f.read()
-        f.close()
-        self.text.delete("1.0", "end") 
-        self.text2.delete("1.0", "end") 
-        檔案內容 = self.text.insert(INSERT,檔案內容)
-        self.程式名= os.path.basename(檔案路徑)
-        print(檔案路徑)
-        self.輸出結果.config(text="開啟檔案 %s" % self.程式名,fg= "black")
+        檔案路徑 = askopenfilename(filetypes=[('py files', '.py')] )
+        if 檔案路徑!="":
+            f= open(檔案路徑,"r",encoding='UTF-8')
+            檔案內容= f.read()
+            f.close()
+            self.text.delete("1.0", "end") 
+            self.text2.delete("1.0", "end") 
+            檔案內容 = self.text.insert(INSERT,檔案內容)
+            self.程式名= os.path.basename(檔案路徑)
+            print(檔案路徑)
+            self.輸出結果.config(text="開啟檔案 %s" % self.程式名,fg= "black")
 
     def 另存新檔1(self, event=None):
         """
         將文件區1的文字存檔
         """
         檔案路徑 = asksaveasfilename(defaultextension= '.py',initialfile= self.程式名,filetypes= [('all files', '.*'), ('py files', '.py')] )
-        檔案內容 = self.text.get(1.0,END)
-        f=open(檔案路徑,"w",encoding='UTF-8')
-        f.write(檔案內容)
-        f.close()
-        新檔名= os.path.basename(檔案路徑)
-        print(檔案路徑)
-        self.輸出結果.config(text="文件區1另存新檔 %s" % 新檔名,fg= "black")
+        if 檔案路徑!="":
+            檔案內容 = self.text.get(1.0,END)
+            f=open(檔案路徑,"w",encoding='UTF-8')
+            f.write(檔案內容)
+            f.close()
+            新檔名= os.path.basename(檔案路徑)
+            self.程式名= 新檔名
+            print(檔案路徑)
+            self.輸出結果.config(text="文件區1另存新檔 %s" % 新檔名,fg= "black")
 
     def 另存新檔2(self, event=None):
         """
@@ -368,13 +397,14 @@ class GUIDemo():
         """
         程式名= 'tc_'+self.程式名
         檔案路徑 = asksaveasfilename(defaultextension= '.py',initialfile= 程式名,filetypes= [('all files', '.*'), ('py files', '.py')] )
-        檔案內容 = self.text2.get(1.0,END)
-        f=open(檔案路徑,"w",encoding='UTF-8')
-        f.write(檔案內容)
-        f.close()
-        新檔名= os.path.basename(檔案路徑)
-        print(檔案路徑)
-        self.輸出結果.config(text="文件區2另存新檔 %s" % 新檔名,fg= "black")
+        if 檔案路徑!="":
+            檔案內容 = self.text2.get(1.0,END)
+            f=open(檔案路徑,"w",encoding='UTF-8')
+            f.write(檔案內容)
+            f.close()
+            新檔名= os.path.basename(檔案路徑)
+            print(檔案路徑)
+            self.輸出結果.config(text="文件區2另存新檔 %s" % 新檔名,fg= "black")
 
     def 清除文本(self,event=None):
         """
@@ -567,12 +597,9 @@ class GUIDemo():
         f=open("temp.py","w",encoding='UTF-8')
         f.write(檔案內容)
         f.close()
-        TurtleTranslate.翻譯檔案("", "temp.py",self.bv.get())
-        f=open("tc_temp.py","r",encoding='UTF-8')
-        檔案內容= f.read()
-        f.close()    
+        程式碼,中文化程式碼,標記表,數量=TurtleTranslate.翻譯檔案("", "temp.py",self.bv.get())  
         self.text2.delete("1.0", "end") 
-        檔案內容 = self.text2.insert(INSERT,檔案內容)
+        檔案內容 = self.text2.insert(INSERT,中文化程式碼)
         os.remove("temp.py")
         os.remove("tc_temp.py")
         self.輸出結果.config(text="翻譯: 英文->中文",fg= "black")
@@ -582,12 +609,9 @@ class GUIDemo():
         f=open("temp.py","w",encoding='UTF-8')
         f.write(檔案內容)
         f.close()
-        TurtleTranslate.中翻英檔案("", "temp.py")
-        f=open("te_temp.py","r",encoding='UTF-8')
-        檔案內容= f.read()
-        f.close()    
+        程式碼,英文化程式碼,標記表=TurtleTranslate.中翻英檔案("", "temp.py")
         self.text2.delete("1.0", "end") 
-        檔案內容 = self.text2.insert(INSERT,檔案內容)
+        檔案內容 = self.text2.insert(INSERT,英文化程式碼)
         os.remove("temp.py")
         os.remove("te_temp.py")
         self.輸出結果.config(text="翻譯: 中文 -> 英文",fg= "black")
@@ -597,7 +621,7 @@ class GUIDemo():
         將文件區1的龜模組函數名稱轉換成英文名
         轉換後的文字顯示在文件區2
         """
-        self.開始鍵.config(state=開始設置,bg="#ffc100" if 開始設置 == NORMAL else "#999999")
+        self.執行鍵.config(state=開始設置,bg="#ffc100" if 開始設置 == NORMAL else "#999999")
         self.停止鍵.config(state=停止設置,bg="#ffc100" if 停止設置 == NORMAL else "#999999")
         if 開始設置 == NORMAL:
             self.root.bind_all('<Control-Key-e>', self.執行)
@@ -672,7 +696,7 @@ class GUIDemo():
         module=""
         # module=__import__("Demotempfile313341")
         # module= sys.modules[module]
-        __import__("Demotempfile313341")
+        module=__import__("Demotempfile313341")
  
         module= sys.modules["Demotempfile313341"]
         
@@ -680,6 +704,7 @@ class GUIDemo():
         os.remove("Demotempfile313341.py")
         self.screen.mode("standard")
         state = RUNNING
+        
         # print('主函數' in vars(module))
         # print('main' in vars(module))
         try:
@@ -746,8 +771,7 @@ class GUIDemo():
         
         
 if __name__ == '__main__':
-    root = Tk()
+    
     menufont = ("Arial", 12, NORMAL)
-    root.title('龜作圖程式翻譯')
-    app = GUIDemo(master=root)
-    root.mainloop()
+    app = GUIDemo()
+    app.root.mainloop()

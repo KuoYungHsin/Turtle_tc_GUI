@@ -26,7 +26,7 @@ def _取筆():
 def _取幕():
     """宣告一個匿名龜幕類，當其並不存在時。"""
     if 龜類._screen is None:
-        龜類._screen = _幕類()  ###### 會不會就是這行搞鬼？？ 有無底線之分！
+        龜類._screen = _幕類()  
 
     return 龜類._screen
 class Vec2D(tuple):
@@ -464,7 +464,7 @@ class TurtleScreenBase(object):
         return width, height
 
     def mainloop(self):
-        """『0077  中文說明』
+        """『0079  中文說明』
         主迴圈，進入主迴圈啟動事件循環 - 呼叫 Tkinter的主迴圈函數。
 
         沒有參數。
@@ -494,7 +494,7 @@ class TurtleScreenBase(object):
         TK.mainloop()
 
     def textinput(self, title, prompt):
-        """『0010  中文說明』
+        """『0049  中文說明』
         輸入文字，彈出一個對話窗，讓使用者輸入一個字串。
 
         參數：
@@ -524,7 +524,7 @@ class TurtleScreenBase(object):
         return simpledialog.askstring(title, prompt)
 
     def numinput(self, title, prompt, default=None, minval=None, maxval=None):
-        """『0032  中文說明』
+        """『0088  中文說明』
         輸入數字，彈出一個對話窗口，可以輸入一個數字。
 
         參數：
@@ -621,7 +621,7 @@ class TurtleScreen(TurtleScreenBase):
             rootwindow.call('wm', 'attributes', '.', '-topmost', '0')
 
     def clear(self):
-        """『0041  中文說明』
+        """『0024  中文說明』
         清除幕，從 龜幕類 刪除所有圖和 龜類。
 
         沒有參數。
@@ -666,7 +666,7 @@ class TurtleScreen(TurtleScreenBase):
         Turtle._pen = None
 
     def mode(self, mode=None):
-        """『0038  中文說明』
+        """『0031  中文說明』
         模式，設置龜模式('standard', 'logo' or 'world')，並執行 重設()。
 
         可選參數:
@@ -726,7 +726,7 @@ class TurtleScreen(TurtleScreenBase):
         self.reset()
 
     def setworldcoordinates(self, llx, lly, urx, ury):
-        """『0015  中文說明』
+        """『0007  中文說明』
         設座標系統，設置一個使用者定義的座標系。
 
         參數：
@@ -788,7 +788,7 @@ class TurtleScreen(TurtleScreenBase):
         self.update()
 
     def register_shape(self, name, shape=None):
-        """『0022  中文說明』
+        """『0037  中文說明』
         登記形狀，添加一個 龜指標 形狀到 龜幕類 的 形狀列表。
 
         參數:
@@ -886,7 +886,7 @@ class TurtleScreen(TurtleScreenBase):
         return tuple([c * self._colormode/255 for c in cl])
 
     def colormode(self, cmode=None):
-        """『0004  中文說明』
+        """『0017  中文說明』
         色模式，回傳色模式設定或將其設置為 1.0 或 255。
 
         可選參數:
@@ -945,7 +945,7 @@ class TurtleScreen(TurtleScreenBase):
             turtle.reset()
 
     def turtles(self):
-        """『0039  中文說明』
+        """『0065  中文說明』
         龜群，回傳螢幕上龜列表。
 
         範例(物件名為「螢幕」的實例)：
@@ -964,7 +964,7 @@ class TurtleScreen(TurtleScreenBase):
         return self._turtles
 
     def bgcolor(self, *args):
-        """『0092  中文說明』
+        """『0002  中文說明』
         背景色，設置或回傳 龜幕類 的背景顏色。
 
         參數(可選)：
@@ -1004,7 +1004,7 @@ class TurtleScreen(TurtleScreenBase):
         return color
 
     def tracer(self, n=None, delay=None):
-        """『0089  中文說明』
+        """『0054  中文說明』
         追蹤，開/關 龜動畫，並設置更新畫面的延遲時間。
 
         可選參數:
@@ -1054,7 +1054,7 @@ class TurtleScreen(TurtleScreenBase):
             self.update()
 
     def delay(self, delay=None):
-        """『0006  中文說明』
+        """『0043  中文說明』
         延遲，回傳或設置畫面更新的延遲時間，以毫秒為單位。
 
         可選參數:
@@ -1091,7 +1091,7 @@ class TurtleScreen(TurtleScreenBase):
             self._updatecounter %= self._tracing
 
     def update(self):
-        """『0078  中文說明』
+        """『0038  中文說明』
         更新，執行 龜幕類 更新。
 
 
@@ -1106,7 +1106,7 @@ class TurtleScreen(TurtleScreenBase):
         self._update()
 
     def window_width(self):
-        """『0001  中文說明』
+        """『0018  中文說明』
         取幕寬，回傳龜視窗的寬度。
 
         範例(物件名為「螢幕」的實例)：
@@ -1125,7 +1125,7 @@ class TurtleScreen(TurtleScreenBase):
         return self._window_size()[0]
 
     def window_height(self):
-        """『0026  中文說明』
+        """『0056  中文說明』
         取幕高，回傳龜視窗的高度。
 
         範例(物件名為「螢幕」的實例)：
@@ -1144,7 +1144,7 @@ class TurtleScreen(TurtleScreenBase):
         return self._window_size()[1]
 
     def getcanvas(self):
-        """『0082  中文說明』
+        """『0006  中文說明』
         取畫布，回傳一個在 龜幕類 上的 畫布 物件。
 
         沒有參數。
@@ -1190,7 +1190,7 @@ class TurtleScreen(TurtleScreenBase):
         return sorted(self._shapes.keys())
 
     def onclick(self, fun, btn=1, add=None):
-        """『0007  中文說明』
+        """『0042  中文說明』
         在點擊幕時，連結函數 於 畫布上 點擊鼠標的事件。
 
         參數：
@@ -1221,7 +1221,7 @@ class TurtleScreen(TurtleScreenBase):
         self._onscreenclick(fun, btn, add)
 
     def onkey(self, fun, key):
-        """『0043  中文說明』
+        """『0036  中文說明』
         在按鍵時，連結函數 於 鍵盤鍵鬆開事件。
 
         參數：
@@ -1246,7 +1246,7 @@ class TurtleScreen(TurtleScreenBase):
 
 
 
-        『0045  中文說明』
+        『0044  中文說明』
         在按鍵鬆開時，連結函數 於 鍵盤鍵鬆開事件。
 
         參數：
@@ -1301,7 +1301,7 @@ class TurtleScreen(TurtleScreenBase):
         self._onkeyrelease(fun, key)
 
     def onkeypress(self, fun, key=None):
-        """『0027  中文說明』
+        """『0063  中文說明』
         在按著鍵時，如果有指定鍵的話，連結函數 於 單一鍵盤鍵按下事件；
         如果沒有指定鍵的話，則連結任何按鍵事件。
 
@@ -1360,7 +1360,7 @@ class TurtleScreen(TurtleScreenBase):
         self._onkeypress(fun, key)
 
     def listen(self, xdummy=None, ydummy=None):
-        """『0073  中文說明』
+        """『0078  中文說明』
         聽，設置聚焦於  龜幕類 之上(為了收集鍵盤事件)。
 
         沒有參數。
@@ -1383,7 +1383,7 @@ class TurtleScreen(TurtleScreenBase):
         self._listen()
 
     def ontimer(self, fun, t=0):
-        """『0012  中文說明』
+        """『0020  中文說明』
         在計時後，安裝計時器，t毫秒後呼叫函數。
 
         參數：
@@ -1425,7 +1425,7 @@ class TurtleScreen(TurtleScreenBase):
         self._ontimer(fun, t)
 
     def bgpic(self, picname=None):
-        """『0020  中文說明』
+        """『0089  中文說明』
         背景圖，設置或回傳背景圖片。
 
         可選參數:
@@ -1468,7 +1468,7 @@ class TurtleScreen(TurtleScreenBase):
         self._bgpicname = picname
 
     def screensize(self, canvwidth=None, canvheight=None, bg=None):
-        """『0024  中文說明』
+        """『0050  中文說明』
         幕大小，重設畫布大小。
 
         可選參數:
@@ -1616,7 +1616,7 @@ class TNavigator(object):
             self._angleOffset = fullcircle/4.
 
     def degrees(self, fullcircle=360.0):
-        """『0044  中文說明』
+        """『0072  中文說明』
         角度，設定 角 的度量單位為 「度數」。
 
         可選參數:
@@ -1664,7 +1664,7 @@ class TNavigator(object):
         self._setDegreesPerAU(fullcircle)
 
     def radians(self):
-        """『0068  中文說明』
+        """『0082  中文說明』
         弳度，設置角度測量單位為弧度(單位圓的弧長)。
 
         沒有參數。
@@ -1706,7 +1706,7 @@ class TNavigator(object):
         self._position = end
 
     def forward(self, distance):
-        """『0033  中文說明』
+        """『0066  中文說明』
         前進，龜前進指定的距離。
 
         別名: 前進 | forward | fd
@@ -1753,7 +1753,7 @@ class TNavigator(object):
         self._go(distance)
 
     def back(self, distance):
-        """『0005  中文說明』
+        """『0008  中文說明』
         後退，後退 一段距離。
 
         別名: 後退 | back | backward | bk
@@ -1793,7 +1793,7 @@ class TNavigator(object):
         self._go(-distance)
 
     def right(self, angle):
-        """『0083  中文說明』
+        """『0000  中文說明』
         右轉，向右轉一個角度。
 
         別名：右轉 | rt | right
@@ -1834,7 +1834,7 @@ class TNavigator(object):
         self._rotate(-angle)
 
     def left(self, angle):
-        """『0016  中文說明』
+        """『0086  中文說明』
         左轉， 龜指標 左轉指定角度單位。
 
         別名: 左轉 | left | lt
@@ -1876,7 +1876,7 @@ class TNavigator(object):
         self._rotate(angle)
 
     def pos(self):
-        """『0036  中文說明』
+        """『0025  中文說明』
          位置，回傳 龜的當前位置(X,Y)，資料型態是Vec2D向量。
 
         別名: pos | position | 位置
@@ -1902,7 +1902,7 @@ class TNavigator(object):
         return self._position
 
     def xcor(self):
-        """『0053  中文說明』
+        """『0021  中文說明』
         x座標，回傳 龜指標 的x座標。
 
         沒有參數。
@@ -1930,7 +1930,7 @@ class TNavigator(object):
         return self._position[0]
 
     def ycor(self):
-        """『0037  中文說明』
+        """『0030  中文說明』
         y座標，回傳 龜指標 的y座標。
         
         沒有參數。
@@ -1959,7 +1959,7 @@ class TNavigator(object):
 
 
     def goto(self, x, y=None):
-        """『0049  中文說明』
+        """『0092  中文說明』
         前往，龜前往一個絕對位置。
 
         別名：前往 | 設位置 | setpos | setposition | goto:
@@ -2026,7 +2026,7 @@ class TNavigator(object):
             self._goto(Vec2D(x, y))
 
     def home(self):
-        """『0018  中文說明』
+        """『0034  中文說明』
         回家，讓 龜指標 回到原點 - 座標(0,0)。
 
         沒有參數。
@@ -2053,7 +2053,7 @@ class TNavigator(object):
         self.setheading(0)
 
     def setx(self, x):
-        """『0084  中文說明』
+        """『0040  中文說明』
         設x座標，設置龜的 x 座標。
 
         參數:
@@ -2088,7 +2088,7 @@ class TNavigator(object):
         self._goto(Vec2D(x, self._position[1]))
 
     def sety(self, y):
-        """『0013  中文說明』
+        """『0057  中文說明』
         設y座標，設置龜的 y 座標。
 
         參數:
@@ -2123,7 +2123,7 @@ class TNavigator(object):
         self._goto(Vec2D(self._position[0], y))
 
     def distance(self, x, y=None):
-        """『0035  中文說明』
+        """『0001  中文說明』
         距離，回傳從龜指標本身位置 到 座標 x, y 的距離。
 
         參數：
@@ -2179,7 +2179,7 @@ class TNavigator(object):
         return abs(pos - self._position)
 
     def towards(self, x, y=None):
-        """『0009  中文說明』
+        """『0058  中文說明』
         朝向，計算並回傳 龜指標 朝向 點(x,y) 的角度，亦即從 龜指標 的位置 到點(x,y) 的直線角度。
 
         參數:
@@ -2238,7 +2238,7 @@ class TNavigator(object):
         return (self._angleOffset + self._angleOrient*result) % self._fullcircle
 
     def heading(self):
-        """『0069  中文說明』
+        """『0013  中文說明』
         頭向，回傳當前 龜指標 的方向。
 
         沒有參數。
@@ -2265,7 +2265,7 @@ class TNavigator(object):
         return (self._angleOffset + self._angleOrient*result) % self._fullcircle
 
     def setheading(self, to_angle):
-        """『0002  中文說明』
+        """『0059  中文說明』
         設頭向，設置 龜指標 的方向。
 
         別名: setheading | 設頭向
@@ -2318,7 +2318,7 @@ class TNavigator(object):
         self._rotate(angle)
 
     def circle(self, radius, extent = None, steps = None):
-        """『0070  中文說明』
+        """『0039  中文說明』
         畫圓，給定半徑。
 
         參數:
@@ -2501,7 +2501,7 @@ class TPen(object):
         self._outlinewidth = 1
 
     def resizemode(self, rmode=None):
-        """『0047  中文說明』
+        """『0076  中文說明』
          重設大小模式，"auto", "user", "noresize"。
 
         (可選)參數:
@@ -2550,7 +2550,7 @@ class TPen(object):
             self.pen(resizemode=rmode)
 
     def pensize(self, width=None):
-        """『0011  中文說明』
+        """『0033  中文說明』
         筆粗(筆寬)，設置或回傳線條的粗細。
 
         別名:pensize | width | 筆粗 | 筆寬
@@ -2593,7 +2593,7 @@ class TPen(object):
 
 
     def penup(self):
-        """『0081  中文說明』
+        """『0064  中文說明』
         提筆，移動時無畫線。
 
         別名: 提筆 | pu | penup
@@ -2619,7 +2619,7 @@ class TPen(object):
         self.pen(pendown=False)
 
     def pendown(self):
-        """『0065  中文說明』
+        """『0011  中文說明』
         下筆 - 移動時畫圖。
 
         別名: 下筆 | pendown | pd | down
@@ -2631,7 +2631,7 @@ class TPen(object):
         >>> 龜.下筆()
 
 
-        『0091  中文說明』
+        『0060  中文說明』
         下筆，移動時繪製，會畫出移動軌跡。
 
         別名:下筆| pd | pendown
@@ -2657,7 +2657,7 @@ class TPen(object):
         self.pen(pendown=True)
 
     def isdown(self):
-        """『0072  中文說明』
+        """『0014  中文說明』
         下筆嗎，測試是否為下筆狀態。傳回真假值(True/False)。
 
         沒有參數。
@@ -2687,7 +2687,7 @@ class TPen(object):
         return self._drawing
 
     def speed(self, speed=None):
-        """『0079  中文說明』
+        """『0003  中文說明』
         速度，回傳或設置 龜指標 的速度。
 
         可選參數：
@@ -2753,7 +2753,7 @@ class TPen(object):
         self.pen(speed=speed)
 
     def color(self, *args):
-        """『0050  中文說明』
+        """『0010  中文說明』
         顏色，回傳或設定 顏色 和 填色。
 
         參數：
@@ -2831,7 +2831,7 @@ class TPen(object):
             return self._color(self._pencolor), self._color(self._fillcolor)
 
     def pencolor(self, *args):
-        """『0064  中文說明』
+        """『0090  中文說明』
         筆色，回傳或設定筆色。
 
         參數:
@@ -2897,7 +2897,7 @@ class TPen(object):
             return self._color(self._pencolor)
 
     def fillcolor(self, *args):
-        """『0085  中文說明』
+        """『0075  中文說明』
         填色，回傳或設定 填色。
 
         參數:
@@ -2961,7 +2961,7 @@ class TPen(object):
             return self._color(self._fillcolor)
 
     def showturtle(self):
-        """『0052  中文說明』
+        """『0046  中文說明』
         顯龜，讓 龜指標 可見。
 
         別名：showturtle | st | 顯龜
@@ -2987,7 +2987,7 @@ class TPen(object):
         self.pen(shown=True)
 
     def hideturtle(self):
-        """『0046  中文說明』
+        """『0083  中文說明』
         藏龜，把 龜指標 隱藏起來。
 
         別名: 藏龜 | 藏 | hideturtle | ht
@@ -3019,7 +3019,7 @@ class TPen(object):
         self.pen(shown=False)
 
     def isvisible(self):
-        """『0034  中文說明』
+        """『0069  中文說明』
         顯龜嗎，測試龜指標是否為可見狀態。傳回真假值(True/False)。
 
         沒有參數。
@@ -3043,7 +3043,7 @@ class TPen(object):
         return self._shown
 
     def pen(self, pen=None, **pendict):
-        """『0086  中文說明』
+        """『0073  中文說明』
         筆，回傳或設置筆的屬性。
 
         參數:
@@ -3322,7 +3322,7 @@ class RawTurtle(TPen, TNavigator):
         self._update()
 
     def reset(self):
-        """『0040  中文說明』
+        """『0085  中文說明』
         重設，刪除龜指標的圖和恢復其預設值。
 
         沒有參數。
@@ -3368,7 +3368,7 @@ class RawTurtle(TPen, TNavigator):
         self._update()
 
     def setundobuffer(self, size):
-        """『0031  中文說明』
+        """『0070  中文說明』
         設回復暫存區，設置或禁用回復暫存區。
 
         參數:
@@ -3403,7 +3403,7 @@ class RawTurtle(TPen, TNavigator):
             self.undobuffer = Tbuffer(size)
 
     def undobufferentries(self):
-        """『0061  中文說明』
+        """『0047  中文說明』
         回復暫存區的個數，回傳目前回復暫存區內可撤消動作的數量。
 
         沒有參數。
@@ -3441,7 +3441,7 @@ class RawTurtle(TPen, TNavigator):
 
 
     def clear(self):
-        """『0060  中文說明』
+        """『0004  中文說明』
         清除，清除 龜指標 在螢幕上所畫的圖，龜指標 不會移動。
 
         沒有參數。
@@ -3538,7 +3538,7 @@ class RawTurtle(TPen, TNavigator):
         return "#%02x%02x%02x" % (r, g, b)
 
     def clone(self):
-        """『0000  中文說明』
+        """『0074  中文說明』
         複製，複製產生另一隻 龜類。
 
         沒有參數。
@@ -3592,7 +3592,7 @@ class RawTurtle(TPen, TNavigator):
         return q
 
     def shape(self, name=None):
-        """『0055  中文說明』
+        """『0041  中文說明』
         形狀，根據指定形狀名稱設置龜形狀，或回傳當前形狀名稱。
 
         可選參數:
@@ -3641,7 +3641,7 @@ class RawTurtle(TPen, TNavigator):
         self._update()
 
     def shapesize(self, stretch_wid=None, stretch_len=None, outline=None):
-        """『0017  中文說明』
+        """『0023  中文說明』
         形狀大小，設置或回傳龜的 展延因子和輪廓。並設置 重設大小模式 為"user"。
 
         可選參數:
@@ -3704,7 +3704,7 @@ class RawTurtle(TPen, TNavigator):
                  stretchfactor=stretchfactor, outline=outline)
 
     def shearfactor(self, shear=None):
-        """『0025  中文說明』
+        """『0048  中文說明』
         扭曲因子，設置或回傳當前扭曲因子。
 
         可選參數：
@@ -3748,7 +3748,7 @@ class RawTurtle(TPen, TNavigator):
         self.pen(resizemode="user", shearfactor=shear)
 
     def settiltangle(self, angle):
-        """『0076  中文說明』
+        """『0053  中文說明』
         設傾角，旋轉 龜指標 到指定的方向。
 
         參數:
@@ -3793,7 +3793,7 @@ class RawTurtle(TPen, TNavigator):
         self.pen(resizemode="user", tilt=tilt)
 
     def tiltangle(self, angle=None):
-        """『0075  中文說明』
+        """『0068  中文說明』
         傾斜角度，設置或回傳當前的傾斜角度。
 
         可選參數：
@@ -3842,7 +3842,7 @@ class RawTurtle(TPen, TNavigator):
             self.settiltangle(angle)
 
     def tilt(self, angle):
-        """『0042  中文說明』
+        """『0027  中文說明』
         傾斜，根據指定角度傾斜龜指標形狀。
 
         參數:
@@ -3880,7 +3880,7 @@ class RawTurtle(TPen, TNavigator):
         self.settiltangle(angle + self.tiltangle())
 
     def shapetransform(self, t11=None, t12=None, t21=None, t22=None):
-        """『0071  中文說明』
+        """『0061  中文說明』
         形狀轉換，設置或回傳龜指標形狀的當前變換矩陣。
 
         可選參數：
@@ -3952,7 +3952,7 @@ class RawTurtle(TPen, TNavigator):
                                                            for (x, y) in poly]
 
     def get_shapepoly(self):
-        """『0003  中文說明』
+        """『0055  中文說明』
         取形狀多邊形，回傳當前 多邊形 形狀 的 座標 元組。
 
         沒有參數。
@@ -4036,7 +4036,7 @@ class RawTurtle(TPen, TNavigator):
 ##############################  stamp stuff  ###############################
 
     def stamp(self):
-        """『0074  中文說明』
+        """『0052  中文說明』
         蓋章，將 龜指標 的形狀拓印到畫布上，並回傳其 id 編號。
 
         沒有參數。
@@ -4120,7 +4120,7 @@ class RawTurtle(TPen, TNavigator):
         buf.buffer.insert((buf.ptr+1)%buf.bufsize, [None])
 
     def clearstamp(self, stampid):
-        """『0014  中文說明』
+        """『0081  中文說明』
         清除蓋章，根據指定的編號清除曾經的蓋章
 
         參數:
@@ -4149,7 +4149,7 @@ class RawTurtle(TPen, TNavigator):
         self._update()
 
     def clearstamps(self, n=None):
-        """『0030  中文說明』
+        """『0091  中文說明』
         清除蓋章群，清除所有或前後 n 個 龜的蓋章。
 
         可選參數:
@@ -4349,7 +4349,7 @@ class RawTurtle(TPen, TNavigator):
             self.currentLine = [self._position]
 
     def filling(self):
-        """『0008  中文說明』
+        """『0084  中文說明』
         是否正在填色，查看是否正在填色。
 
         沒有參數。
@@ -4377,7 +4377,7 @@ class RawTurtle(TPen, TNavigator):
         return isinstance(self._fillpath, list)
 
     def begin_fill(self):
-        """『0063  中文說明』
+        """『0035  中文說明』
         開始填，開始填色，要畫一塊要被填色的形狀之前呼叫。
 
         沒有參數。
@@ -4411,7 +4411,7 @@ class RawTurtle(TPen, TNavigator):
 
 
     def end_fill(self):
-        """『0023  中文說明』
+        """『0005  中文說明』
         結束填，在呼叫過 開始填() 函數後，呼叫本函數將其整個形狀填滿顏色。
 
         沒有參數。
@@ -4444,7 +4444,7 @@ class RawTurtle(TPen, TNavigator):
             self._update()
 
     def dot(self, size=None, *color):
-        """『0029  中文說明』
+        """『0016  中文說明』
         畫點，可指定直徑大小及顏色。
 
         可選參數:
@@ -4518,7 +4518,7 @@ class RawTurtle(TPen, TNavigator):
         return end
 
     def write(self, arg, move=False, align="left", font=("Arial", 8, "normal")):
-        """『0021  中文說明』
+        """『0019  中文說明』
         寫，在當前位置寫字。
 
         參數:
@@ -4568,7 +4568,7 @@ class RawTurtle(TPen, TNavigator):
             self.undobuffer.cumulate = False
 
     def begin_poly(self):
-        """『0048  中文說明』
+        """『0077  中文說明』
         開始多邊形，開始紀錄多邊形的頂點。
 
         沒有參數。
@@ -4595,7 +4595,7 @@ class RawTurtle(TPen, TNavigator):
         self._creatingPoly = True
 
     def end_poly(self):
-        """『0028  中文說明』
+        """『0015  中文說明』
         結束多邊形，停止記錄多邊形的頂點。
 
         沒有參數。
@@ -4621,7 +4621,7 @@ class RawTurtle(TPen, TNavigator):
         self._creatingPoly = False
 
     def get_poly(self):
-        """『0051  中文說明』
+        """『0067  中文說明』
         取多邊形，回傳最近記錄的多邊形。
 
         沒有參數。
@@ -4645,7 +4645,7 @@ class RawTurtle(TPen, TNavigator):
             return tuple(self._poly)
 
     def getscreen(self):
-        """『0059  中文說明』
+        """『0009  中文說明』
         取幕，回傳 龜螢幕 物件，可讓 龜類 在其上面畫圖。
 
         沒有參數。
@@ -4677,7 +4677,7 @@ class RawTurtle(TPen, TNavigator):
         return self.screen
 
     def getturtle(self):
-        """『0057  中文說明』
+        """『0012  中文說明』
         取龜，回傳 龜物件 本身。
 
         沒有參數。
@@ -4693,7 +4693,7 @@ class RawTurtle(TPen, TNavigator):
         [<turtle.Turtle object at 0x0187D810>]
 
 
-        『0062  中文說明』
+        『0029  中文說明』
         取筆，回傳 龜類 物件。
 
         沒有參數。
@@ -4738,7 +4738,7 @@ class RawTurtle(TPen, TNavigator):
         return self.screen.delay(delay)
 
     def onclick(self, fun, btn=1, add=None):
-        """『0058  中文說明』
+        """『0026  中文說明』
         在點擊時，當此畫布的龜指標發生 點擊鼠鍵的事件 (mouse-click event) 時連結到指定函數上。
 
         參數:
@@ -4777,7 +4777,7 @@ class RawTurtle(TPen, TNavigator):
         self._update()
 
     def onrelease(self, fun, btn=1, add=None):
-        """『0088  中文說明』
+        """『0071  中文說明』
         在鬆開時，當此畫布的龜指標發生 放開鼠鍵的事件 (mouse-button-release event) 時連結到指定函數上。
 
         參數:
@@ -4823,7 +4823,7 @@ class RawTurtle(TPen, TNavigator):
         self._update()
 
     def ondrag(self, fun, btn=1, add=None):
-        """『0066  中文說明』
+        """『0051  中文說明』
         在拖曳時，當此畫布的龜指標發生 移動滑鼠的事件 (mouse-move event) 時連結到指定函數上。
 
         參數:
@@ -4894,7 +4894,7 @@ class RawTurtle(TPen, TNavigator):
             self.undobuffer.pop()
 
     def undo(self):
-        """『0056  中文說明』
+        """『0045  中文說明』
         回復，撤消最近的動作。
 
         沒有參數。
@@ -5027,7 +5027,7 @@ class _Screen(TurtleScreen):
 
     def setup(self, width=_CFG["width"], height=_CFG["height"],
               startx=_CFG["leftright"], starty=_CFG["topbottom"]):
-        """『0067  中文說明』
+        """『0028  中文說明』
         設立，設主視窗的大小和位置。
 
         參數:
@@ -5092,7 +5092,7 @@ class _Screen(TurtleScreen):
         self.update()
 
     def title(self, titlestring):
-        """『0090  中文說明』
+        """『0062  中文說明』
         設標題，設置龜視窗的標題。
 
         參數:
@@ -5133,7 +5133,7 @@ class _Screen(TurtleScreen):
         root.destroy()
 
     def bye(self):
-        """『0019  中文說明』
+        """『0022  中文說明』
         再見，關閉龜圖視窗。
 
         範例(物件名為「螢幕」的實例)：
@@ -5149,7 +5149,7 @@ class _Screen(TurtleScreen):
         self._destroy()
 
     def exitonclick(self):
-        """『0054  中文說明』
+        """『0032  中文說明』
         在點擊時離開，進入主​​迴圈，直到鼠標點擊關閉視窗。
 
         沒有參數。
